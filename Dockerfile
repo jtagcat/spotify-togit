@@ -1,5 +1,5 @@
 #FROM golang:$ver
-FROM golang:1.17 AS builder
+FROM golang:1.18 AS builder
 WORKDIR /wd
 
 COPY go.mod go.sum ./

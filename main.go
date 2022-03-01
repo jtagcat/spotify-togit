@@ -21,8 +21,8 @@ import (
 
 var (
 	configPath    = "config.yaml"
-	modePerm      = fs.FileMode(0660)
-	dirModePerm   = fs.FileMode(0770)
+	modePerm      = fs.FileMode(0o660)
+	dirModePerm   = fs.FileMode(0o770)
 	committerName = "spotify-togit"
 )
 
