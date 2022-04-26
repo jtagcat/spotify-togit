@@ -8,8 +8,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # https://github.com/docker/docker.github.io/issues/14609
-COPY *.go ./
-COPY **/*.go ./
+COPY . ./
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app
 
 # https://docs.docker.com/develop/develop-images/multistage-build/#use-multi-stage-builds
