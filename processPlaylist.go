@@ -40,13 +40,13 @@ func processPlaylist(mc mainCtx, errChan chan<- error, id spotify.ID) {
 		return
 	}
 
-	plt, err := mc.c.GetPlaylistTracks(mc.ctx, id, // display_name is not included in the response
+	plt, err := mc.c.GetPlaylistItems(mc.ctx, id, // display_name is not included in the response
 		spotify.Fields("next,items(added_at,added_by(id,display_name),is_local,track(!album))")) // can't exclude more than 1 item? !available_markets
 	if err != nil {
 		errChan <- fmt.Errorf("couldn't get playlist tracks for %q: %w", id, err)
 	}
 
-	pltSum := plt.Tracks
+	pltSum := plt.Items
 	for page := 1; ; page++ {
 		err = mc.c.NextPage(mc.ctx, plt)
 		if err == spotify.ErrNoMorePages {
@@ -55,15 +55,17 @@ func processPlaylist(mc mainCtx, errChan chan<- error, id spotify.ID) {
 		if err != nil {
 			errChan <- fmt.Errorf("couldn't get playlist tracks for %q: page %q %w", id, page, err)
 		}
-		pltSum = append(pltSum, plt.Tracks...)
+		pltSum = append(pltSum, plt.Items...)
 	}
 
 	var pltMin []minPlaylistTrack
 	for _, t := range pltSum {
 		pltMin = append(pltMin, minPlaylistTrack{
 			AddedAt: t.AddedAt, AddedBy: t.AddedBy.ID, IsLocal: t.IsLocal,
-			Track: minTrack{ID: t.Track.ID, Name: t.Track.Name, Artists: t.Track.Artists,
-				ExternalURLs: t.Track.ExternalURLs},
+			Track: minTrack{
+				ID: t.Track.Track.ID, Name: t.Track.Track.Name, Artists: t.Track.Track.Artists,
+				ExternalURLs: t.Track.Track.ExternalURLs,
+			},
 		})
 	}
 
