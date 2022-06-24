@@ -61,13 +61,16 @@ func processPlaylist(mc mainCtx, errChan chan<- error, id spotify.ID) {
 
 	var pltMin []minPlaylistTrack
 	for _, t := range pltSum {
-		pltMin = append(pltMin, minPlaylistTrack{
-			AddedAt: t.AddedAt, AddedBy: t.AddedBy.ID, IsLocal: t.IsLocal,
-			Track: minTrack{
-				ID: t.Track.Track.SimpleTrack.ID, Name: t.Track.Track.SimpleTrack.Name,
-				Artists: t.Track.Track.SimpleTrack.Artists, ExternalURLs: t.Track.Track.SimpleTrack.ExternalURLs,
-			},
-		})
+		// TODO: https://github.com/zmb3/spotify/issues/192
+		if !t.IsLocal {
+			pltMin = append(pltMin, minPlaylistTrack{
+				AddedAt: t.AddedAt, AddedBy: t.AddedBy.ID, IsLocal: t.IsLocal,
+				Track: minTrack{
+					ID: t.Track.Track.SimpleTrack.ID, Name: t.Track.Track.SimpleTrack.Name,
+					Artists: t.Track.Track.SimpleTrack.Artists, ExternalURLs: t.Track.Track.SimpleTrack.ExternalURLs,
+				},
+			})
+		}
 	}
 
 	e, err := yaml.Marshal(&exportedPlaylist{
