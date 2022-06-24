@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"path"
 
@@ -33,7 +34,7 @@ func processProfile(mc mainCtx, errChan chan<- error, id spotify.ID) {
 	pftSum := pft.Playlists
 	for page := 2; ; page++ {
 		err = mc.c.NextPage(mc.ctx, pft)
-		if err == spotify.ErrNoMorePages {
+		if errors.Is(err, spotify.ErrNoMorePages) {
 			break
 		}
 		if err != nil {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"path"
 
@@ -49,7 +50,7 @@ func processPlaylist(mc mainCtx, errChan chan<- error, id spotify.ID) {
 	pltSum := plt.Items
 	for page := 1; ; page++ {
 		err = mc.c.NextPage(mc.ctx, plt)
-		if err == spotify.ErrNoMorePages {
+		if errors.Is(err, spotify.ErrNoMorePages) {
 			break
 		}
 		if err != nil {
@@ -63,8 +64,8 @@ func processPlaylist(mc mainCtx, errChan chan<- error, id spotify.ID) {
 		pltMin = append(pltMin, minPlaylistTrack{
 			AddedAt: t.AddedAt, AddedBy: t.AddedBy.ID, IsLocal: t.IsLocal,
 			Track: minTrack{
-				ID: t.Track.Track.ID, Name: t.Track.Track.Name, Artists: t.Track.Track.Artists,
-				ExternalURLs: t.Track.Track.ExternalURLs,
+				ID: t.Track.Track.SimpleTrack.ID, Name: t.Track.Track.SimpleTrack.Name,
+				Artists: t.Track.Track.SimpleTrack.Artists, ExternalURLs: t.Track.Track.SimpleTrack.ExternalURLs,
 			},
 		})
 	}
