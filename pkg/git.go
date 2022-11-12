@@ -3,7 +3,6 @@ package pkg
 import (
 	"errors"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path"
 
@@ -34,7 +33,7 @@ func GitOpenOrInit(path string) (repo *git.Repository, initted bool, err error) 
 // writes a file, and adds it
 func GitWriteAdd(repo *git.Repository, relpath string, data []byte, perm fs.FileMode) error {
 	filepath := path.Join(repo.Path(), relpath)
-	err := ioutil.WriteFile(filepath, append(data, []byte("\n")...), perm)
+	err := os.WriteFile(filepath, append(data, []byte("\n")...), perm)
 	if err != nil {
 		return err
 	}
