@@ -1,7 +1,7 @@
 services:
   spotify-togit:
     image: spotify-togit:build
-    build: https://github.com/jtagcat/spotify-togit#main
+    build: https://github.com/jtagcat/spotify-togit.git#main
     volumes:
       - ./xyz:/wd/data
     environment:
