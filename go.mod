@@ -1,19 +1,21 @@
 module github.com/jtagcat/spotify-togit
 
-go 1.18
+go 1.21
+
+toolchain go1.23.4
 
 require (
-	github.com/zmb3/spotify/v2 v2.3.0
-	golang.org/x/oauth2 v0.2.0
+	github.com/zmb3/spotify/v2 v2.4.3
+	golang.org/x/oauth2 v0.24.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
 require github.com/mcuadros/go-version v0.0.0-20190830083331-035f6764e8d2 // indirect
 
 require (
-	github.com/gogs/git-module v1.7.1
-	github.com/golang/protobuf v1.5.2 // indirect
-	golang.org/x/net v0.23.0 // indirect
-	google.golang.org/appengine v1.6.7 // indirect
-	google.golang.org/protobuf v1.33.0 // indirect
+	github.com/gogs/git-module v1.8.3
+	github.com/golang/protobuf v1.5.4 // indirect
+	golang.org/x/net v0.33.0 // indirect
+	google.golang.org/appengine v1.6.8 // indirect
+	google.golang.org/protobuf v1.36.0 // indirect
 )
