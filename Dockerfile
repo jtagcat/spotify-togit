@@ -1,7 +1,7 @@
 # https://github.com/jtagcat/dotfiles/blob/main/scripts/template/gobuild.Dockerfile
 # non-working workarounds: https://gist.github.com/jtagcat/189b2fd239687ab700f54faa46907df4
 
-FROM golang:1.18 AS builder
+FROM golang:1.23 AS builder
 WORKDIR /wd
 
 COPY go.mod go.sum ./
