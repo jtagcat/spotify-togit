@@ -37,5 +37,6 @@ func GitWriteAdd(repo *git.Repository, relpath string, data []byte, perm fs.File
 	if err != nil {
 		return err
 	}
-	return repo.Add(git.AddOptions{Pathsepcs: []string{relpath}})
+
+	return repo.Add(git.AddOptions{Pathspecs: []string{relpath}})
 }

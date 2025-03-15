@@ -85,7 +85,7 @@ func processPlaylist(mc mainCtx, errChan chan<- error, id spotify.ID) {
 	e, err := yaml.Marshal(&exportedPlaylist{
 		ID: pl.ID, Name: pl.Name, IsPublic: pl.IsPublic, Collaborative: pl.Collaborative,
 		Images: pl.Images, SnapshotID: pl.SnapshotID, Description: pl.Description,
-		Followers: pl.Followers.Count, Tracks: pltMin,
+		Followers: uint(pl.Followers.Count), Tracks: pltMin,
 	})
 	if err != nil {
 		errChan <- fmt.Errorf("couldn't marshal playlist %q: %w", id, err)
